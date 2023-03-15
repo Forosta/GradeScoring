@@ -1,0 +1,55 @@
+package rules
+
+import ru.itmo.databases.model.Grade
+import ru.itmo.databases.resource.ScoreRequest;
+global ru.itmo.databases.model.Grade Grade;
+
+rule "Failed"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+      $s : ScoreRequest(score < 50)
+    then
+       Grade.setGradePoints("F");
+end
+
+rule "Lowest Mark"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+      $s : ScoreRequest(score >= 50 && score <= 54)
+    then
+       Grade.setGradePoints("D");
+end
+
+rule "Low Mark"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+      $s : ScoreRequest(score >= 55 && score <= 64)
+    then
+       Grade.setGradePoints("C");
+end
+
+rule "Good Mark"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+      $s : ScoreRequest(score >= 65 && score <= 79)
+    then
+       Grade.setGradePoints("C");
+end
+
+rule "Best Mark"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+      $s : ScoreRequest(score >= 80 && score <= 100)
+    then
+       Grade.setGradePoints("A");
+end
